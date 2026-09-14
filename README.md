@@ -1,8 +1,8 @@
-# StudyFlow 🎓✨
+# MUDICHU 🎓✨
 
 > A fun, colorful, and minimalist to-do and productivity web app designed specifically for college students.
 
-StudyFlow balances productivity with visual delight: soft pastel aesthetics, light/dark theme switching, an integrated Pomodoro timer with a circular countdown ring and audio alerts, drag-and-drop task grouping, and Firestore real-time persistence (with zero-config local storage fallback).
+MUDICHU balances productivity with visual delight: clean dark/light themes, an integrated Pomodoro timer with a circular countdown ring and audio alerts, drag-and-drop task grouping, and Firestore real-time persistence (with zero-config local storage fallback).
 
 ---
 
@@ -59,7 +59,7 @@ StudyFlow balances productivity with visual delight: soft pastel aesthetics, lig
    ```bash
    cp .env.example .env
    ```
-   *Note: If omitted, StudyFlow works seamlessly out-of-the-box using local storage.*
+   *Note: If omitted, MUDICHU works seamlessly out-of-the-box using local storage.*
 
 4. Start development server:
    ```bash

@@ -101,7 +101,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 Feedback & Suggestions
               </h2>
               <p className="text-xs text-neutral-500 dark:text-[#8a8a8a]">
-                Help make StudyFlow better for college students
+                Help make MUDICHU better for college students
               </p>
             </div>
           </div>
@@ -122,13 +122,13 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
               Thanks for the feedback! 🙌
             </h3>
             <p className="text-sm text-neutral-500 dark:text-[#8a8a8a] max-w-sm mx-auto leading-relaxed">
-              Your thoughts and suggestions go directly to our inbox and help us polish StudyFlow.
+              Your thoughts and suggestions go directly to our inbox and help us polish MUDICHU.
             </p>
             <button
               onClick={onClose}
               className="mt-2 px-6 py-2.5 rounded-2xl bg-[#ff4d6d] hover:bg-[#ff3357] text-white text-sm font-semibold shadow-md transition-all active:scale-95 cursor-pointer"
             >
-              Back to StudyFlow
+              Back to MUDICHU
             </button>
           </div>
         ) : (

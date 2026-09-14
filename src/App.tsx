@@ -60,7 +60,7 @@ const MainApp: React.FC = () => {
                 </span>
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-800 dark:text-[#e5e5e5] flex items-center">
-                    <span>StudyFlow Tip</span>
+                    <span>MUDICHU Tip</span>
                     <Zap className="w-3 h-3 text-[#fbbf24] ml-1.5 inline" />
                   </h4>
                   <p className="text-xs text-neutral-500 dark:text-[#8a8a8a] mt-1.5 leading-relaxed">

@@ -16,13 +16,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAddTask, onOpenFeedback })
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-[#ff4d6d] text-white flex items-center justify-center text-lg font-bold shadow-xs">
-            🎓
-          </div>
+          <img
+            src="/logo_v1.png"
+            alt="MUDICHU Logo"
+            className="w-9 h-9 rounded-xl object-contain shadow-xs"
+          />
           <div>
             <div className="flex items-center space-x-2">
               <span className="text-lg font-extrabold tracking-tight text-neutral-900 dark:text-[#e5e5e5]">
-                StudyFlow
+                MUDICHU
               </span>
               <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] border border-neutral-200 dark:border-[#262626]">
                 Student
