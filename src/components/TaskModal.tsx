@@ -11,13 +11,13 @@ interface TaskModalProps {
 }
 
 const SUBJECT_PRESETS = [
-  { name: 'Math', color: '#3b82f6' },
-  { name: 'CS', color: '#8b5cf6' },
-  { name: 'Biology', color: '#10b981' },
-  { name: 'Economics', color: '#f59e0b' },
-  { name: 'Essay', color: '#ec4899' },
-  { name: 'Project', color: '#06b6d4' },
-  { name: 'Personal', color: '#64748b' },
+  { name: 'Math', color: '#ff4d6d' },
+  { name: 'CS', color: '#2dd4bf' },
+  { name: 'Biology', color: '#2dd4bf' },
+  { name: 'Economics', color: '#fbbf24' },
+  { name: 'Essay', color: '#ff4d6d' },
+  { name: 'Project', color: '#2dd4bf' },
+  { name: 'Personal', color: '#8a8a8a' },
 ];
 
 export const TaskModal: React.FC<TaskModalProps> = ({
@@ -29,7 +29,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
 
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
-  const [subjectColor, setSubjectColor] = useState('#3b82f6');
+  const [subjectColor, setSubjectColor] = useState('#ff4d6d');
   const [dueDate, setDueDate] = useState(getTodayString());
   const [priority, setPriority] = useState<Priority>('medium');
   const [error, setError] = useState('');
@@ -39,21 +39,19 @@ export const TaskModal: React.FC<TaskModalProps> = ({
     if (editingTask) {
       setTitle(editingTask.title);
       setSubject(editingTask.subject || '');
-      setSubjectColor(editingTask.subjectColor || '#3b82f6');
+      setSubjectColor(editingTask.subjectColor || '#ff4d6d');
       setDueDate(editingTask.dueDate || '');
       setPriority(editingTask.priority);
     } else {
-      // Default to fresh state
       setTitle('');
       setSubject('');
-      setSubjectColor('#3b82f6');
+      setSubjectColor('#ff4d6d');
       setDueDate(getTodayString());
       setPriority('medium');
     }
     setError('');
   }, [editingTask, isOpen]);
 
-  // Handle escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -114,24 +112,24 @@ export const TaskModal: React.FC<TaskModalProps> = ({
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-slate-850 dark:bg-slate-800 p-6 sm:p-7 shadow-2xl border border-slate-200 dark:border-slate-700 transition-all transform scale-100">
+      <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#141414] p-6 sm:p-7 shadow-2xl border border-neutral-200 dark:border-[#262626] transition-all transform scale-100">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700/60">
+        <div className="flex items-center justify-between pb-4 border-b border-neutral-100 dark:border-[#222222]">
           <div className="flex items-center space-x-2">
-            <span className="p-2 rounded-xl bg-rose-50 text-rose-500 dark:bg-rose-950/50 dark:text-rose-400">
+            <span className="p-2 rounded-xl bg-[#ff4d6d]/10 text-[#ff4d6d]">
               <Sparkles className="w-5 h-5" />
             </span>
-            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">
+            <h2 className="text-lg font-bold text-neutral-900 dark:text-[#e5e5e5]">
               {editingTask ? 'Edit Study Task' : 'Add New Task'}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+            className="p-2 rounded-xl text-neutral-400 hover:text-neutral-600 dark:text-[#8a8a8a] dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -140,7 +138,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         {/* Form */}
         <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           {error && (
-            <div className="flex items-center space-x-2 p-3 rounded-xl bg-rose-50 text-rose-600 dark:bg-rose-950/50 dark:text-rose-300 text-xs font-medium">
+            <div className="flex items-center space-x-2 p-3 rounded-xl bg-[#ff4d6d]/10 text-[#ff4d6d] border border-[#ff4d6d]/20 text-xs font-medium">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -148,43 +146,32 @@ export const TaskModal: React.FC<TaskModalProps> = ({
 
           {/* Title */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-[#8a8a8a] mb-1.5">
               Task Title *
             </label>
             <input
               type="text"
               autoFocus
-              placeholder="e.g. Write Introduction for Psychology Term Paper"
+              placeholder="e.g. Write Introduction for Psychology Paper"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-500/40 text-sm font-medium transition-all"
+              className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm font-medium transition-all"
             />
           </div>
 
-          {/* Subject / Course Tag with Quick Presets */}
+          {/* Subject / Tag */}
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Course / Subject Tag
-              </label>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1">
-                <Tag className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  placeholder="e.g. Math, CS 101, History"
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-500/40 text-sm transition-all"
-                />
-              </div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-[#8a8a8a] mb-1.5">
+              Course / Subject Tag
+            </label>
+            <div className="relative">
+              <Tag className="w-4 h-4 text-neutral-400 dark:text-[#666666] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
-                type="color"
-                value={subjectColor}
-                onChange={(e) => setSubjectColor(e.target.value)}
-                className="w-10 h-10 p-1 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer shrink-0"
-                title="Choose tag badge color"
+                type="text"
+                placeholder="e.g. Math, CS, History"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all"
               />
             </div>
 
@@ -198,10 +185,10 @@ export const TaskModal: React.FC<TaskModalProps> = ({
                     setSubject(preset.name);
                     setSubjectColor(preset.color);
                   }}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer border ${
                     subject === preset.name
-                      ? 'bg-rose-500 text-white'
-                      : 'bg-slate-100 dark:bg-slate-750 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+                      ? 'bg-[#ff4d6d] text-white border-[#ff4d6d]'
+                      : 'bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] border-neutral-200 dark:border-[#262626] hover:text-neutral-900 dark:hover:text-[#e5e5e5]'
                   }`}
                 >
                   <span
@@ -217,47 +204,47 @@ export const TaskModal: React.FC<TaskModalProps> = ({
           {/* Due Date */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <label className="text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-[#8a8a8a]">
                 Due Date
               </label>
               <div className="flex items-center space-x-1">
                 <button
                   type="button"
                   onClick={() => setDatePreset(0)}
-                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200"
+                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626]"
                 >
                   Today
                 </button>
                 <button
                   type="button"
                   onClick={() => setDatePreset(1)}
-                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200"
+                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626]"
                 >
                   Tomorrow
                 </button>
                 <button
                   type="button"
                   onClick={() => setDatePreset(7)}
-                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200"
+                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626]"
                 >
                   Next Week
                 </button>
               </div>
             </div>
             <div className="relative">
-              <Calendar className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Calendar className="w-4 h-4 text-neutral-400 dark:text-[#666666] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/40"
+                className="w-full pl-9 pr-4 py-2 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] text-sm focus:outline-none focus:border-[#ff4d6d]"
               />
             </div>
           </div>
 
           {/* Priority */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-[#8a8a8a] mb-1.5">
               Priority
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -266,50 +253,50 @@ export const TaskModal: React.FC<TaskModalProps> = ({
                 onClick={() => setPriority('low')}
                 className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                   priority === 'low'
-                    ? 'bg-emerald-100 border-emerald-300 text-emerald-800 dark:bg-emerald-950/70 dark:border-emerald-700 dark:text-emerald-200'
-                    : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100'
+                    ? 'bg-[#2dd4bf]/15 border-[#2dd4bf] text-[#2dd4bf]'
+                    : 'bg-neutral-50 dark:bg-[#0f0f0f] border-neutral-200 dark:border-[#262626] text-neutral-600 dark:text-[#8a8a8a] hover:border-neutral-300'
                 }`}
               >
-                🌱 Low
+                Low
               </button>
               <button
                 type="button"
                 onClick={() => setPriority('medium')}
                 className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                   priority === 'medium'
-                    ? 'bg-amber-100 border-amber-300 text-amber-800 dark:bg-amber-950/70 dark:border-amber-700 dark:text-amber-200'
-                    : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100'
+                    ? 'bg-[#fbbf24]/15 border-[#fbbf24] text-[#fbbf24]'
+                    : 'bg-neutral-50 dark:bg-[#0f0f0f] border-neutral-200 dark:border-[#262626] text-neutral-600 dark:text-[#8a8a8a] hover:border-neutral-300'
                 }`}
               >
-                ⚡ Medium
+                Medium
               </button>
               <button
                 type="button"
                 onClick={() => setPriority('high')}
                 className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                   priority === 'high'
-                    ? 'bg-rose-100 border-rose-300 text-rose-800 dark:bg-rose-950/70 dark:border-rose-700 dark:text-rose-200'
-                    : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100'
+                    ? 'bg-[#ff4d6d]/15 border-[#ff4d6d] text-[#ff4d6d]'
+                    : 'bg-neutral-50 dark:bg-[#0f0f0f] border-neutral-200 dark:border-[#262626] text-neutral-600 dark:text-[#8a8a8a] hover:border-neutral-300'
                 }`}
               >
-                🔥 High
+                High
               </button>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-100 dark:border-slate-700/60">
+          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-neutral-100 dark:border-[#222222]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl text-sm font-medium text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold text-sm shadow-md shadow-rose-500/20 active:scale-95 transition-all cursor-pointer"
+              className="px-6 py-2 rounded-xl bg-[#ff4d6d] hover:bg-[#ff3357] text-white font-semibold text-sm shadow-xs active:scale-95 transition-all cursor-pointer"
             >
               {isSubmitting ? 'Saving...' : editingTask ? 'Update Task' : 'Create Task'}
             </button>

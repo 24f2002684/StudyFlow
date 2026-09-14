@@ -61,16 +61,16 @@ export const TaskGroup: React.FC<TaskGroupProps> = ({
         className="flex items-center justify-between py-2 px-1 cursor-pointer select-none group"
       >
         <div className="flex items-center space-x-2.5">
-          <span className="text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200 transition-colors">
+          <span className="text-neutral-400 dark:text-[#666666] group-hover:text-neutral-600 dark:group-hover:text-[#e5e5e5] transition-colors">
             {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
           </span>
           <div className="flex items-center space-x-2">
-            <span className="text-base sm:text-lg">{icon}</span>
-            <h3 className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100">
+            <span className="text-base">{icon}</span>
+            <h3 className="text-base font-bold text-neutral-900 dark:text-[#e5e5e5]">
               {title}
             </h3>
           </div>
-          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+          <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] border border-neutral-200 dark:border-[#262626]">
             {tasks.length}
           </span>
         </div>
@@ -80,11 +80,11 @@ export const TaskGroup: React.FC<TaskGroupProps> = ({
       {isExpanded && (
         <div className="mt-2 space-y-2.5">
           {tasks.length === 0 ? (
-            <div className="py-7 px-4 text-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
-              <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+            <div className="py-7 px-4 text-center rounded-2xl border border-dashed border-neutral-200 dark:border-[#262626] bg-neutral-50/50 dark:bg-[#111111]/40">
+              <p className="text-sm font-semibold text-neutral-700 dark:text-[#d4d4d4]">
                 {emptyMessage}
               </p>
-              <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+              <p className="text-xs text-neutral-400 dark:text-[#777777] mt-1">
                 {emptySubtext}
               </p>
             </div>
@@ -98,7 +98,7 @@ export const TaskGroup: React.FC<TaskGroupProps> = ({
                 onDrop={() => handleDrop(index)}
                 onDragEnd={handleDragEnd}
                 className={`transition-all duration-200 ${
-                  dragOverIndex === index ? 'border-t-2 border-rose-400 pt-1' : ''
+                  dragOverIndex === index ? 'border-t-2 border-[#ff4d6d] pt-1' : ''
                 } ${draggedIndex === index ? 'opacity-40' : 'opacity-100'}`}
               >
                 <TaskItem

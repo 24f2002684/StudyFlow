@@ -8,15 +8,15 @@ export const ThemeToggle: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative inline-flex items-center justify-center p-2.5 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-slate-600 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-400 shadow-sm hover:shadow transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400/40"
+      className="p-2 rounded-xl bg-white dark:bg-[#141414] border border-neutral-200 dark:border-[#262626] text-neutral-600 dark:text-[#e5e5e5] hover:text-[#ff4d6d] dark:hover:text-[#ff4d6d] hover:border-[#ff4d6d]/40 dark:hover:border-[#ff4d6d]/40 shadow-xs transition-all active:scale-95 cursor-pointer"
       title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
       aria-label="Toggle Theme"
     >
-      <div className="relative w-5 h-5 flex items-center justify-center">
+      <div className="w-4 h-4 flex items-center justify-center">
         {theme === 'light' ? (
-          <Sun className="w-5 h-5 text-amber-500 transform transition-transform duration-300 rotate-0 scale-100" />
+          <Moon className="w-4 h-4 text-neutral-700 transition-transform duration-200" />
         ) : (
-          <Moon className="w-5 h-5 text-indigo-400 transform transition-transform duration-300 rotate-0 scale-100" />
+          <Sun className="w-4 h-4 text-[#fbbf24] transition-transform duration-200" />
         )}
       </div>
     </button>
