@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Loader2 } from 'lucide-react';
 
@@ -14,12 +15,18 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   size = 'normal',
 }) => {
   const { signInWithGoogle, loading, error } = useAuth();
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const handleClick = async () => {
     try {
       setIsSubmitting(true);
-      await signInWithGoogle();
+      const userProfile = await signInWithGoogle();
+      if (userProfile) {
+        navigate('/app');
+      }
+    } catch (err) {
+      console.error('[MUDICHU] Sign-in button click error:', err);
     } finally {
       setIsSubmitting(false);
     }

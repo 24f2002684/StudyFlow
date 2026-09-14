@@ -3,6 +3,7 @@ import type { User } from 'firebase/auth';
 import {
   signInWithPopup,
   signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
@@ -20,7 +21,7 @@ interface AuthContextType {
   user: UserProfile | null;
   loading: boolean;
   error: string | null;
-  signInWithGoogle: () => Promise<void>;
+  signInWithGoogle: () => Promise<UserProfile | null>;
   logout: () => Promise<void>;
   clearError: () => void;
 }
@@ -34,7 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Sync / create user profile document in Firestore
+  // Sync / create user profile document in Firestore (non-blocking background task)
   const syncUserToFirestore = async (firebaseUser: User) => {
     if (!db) return;
     try {
@@ -62,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         );
       }
     } catch (err) {
-      console.warn('Could not sync user profile to Firestore:', err);
+      console.warn('[MUDICHU] Firestore profile sync note (non-critical):', err);
     }
   };
 
@@ -81,7 +82,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    // 1. Check for redirect flow result (e.g. mobile or popup-blocked browsers)
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          const profile: UserProfile = {
+            uid: result.user.uid,
+            name: result.user.displayName,
+            email: result.user.email,
+            photoURL: result.user.photoURL,
+          };
+          setUser(profile);
+          syncUserToFirestore(result.user).catch((err) => {
+            console.warn('Background sync failed after redirect:', err);
+          });
+        }
+      })
+      .catch((err) => {
+        console.error('[MUDICHU] Redirect auth result error:', err);
+        if (err?.code === 'auth/unauthorized-domain') {
+          setError(
+            `Firebase Authorized Domain Error: '${window.location.hostname}' is not authorized in Firebase Console > Authentication > Settings > Authorized domains.`
+          );
+        } else {
+          setError(err?.message || 'Error processing Google redirect sign-in.');
+        }
+      });
+
+    // 2. Listen to active auth state changes
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         const profile: UserProfile = {
           uid: firebaseUser.uid,
@@ -90,17 +119,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           photoURL: firebaseUser.photoURL,
         };
         setUser(profile);
-        await syncUserToFirestore(firebaseUser);
+        setLoading(false);
+        // Sync profile non-blockingly so navigation is instant
+        syncUserToFirestore(firebaseUser).catch((err) => {
+          console.warn('Background Firestore profile sync failed:', err);
+        });
       } else {
         setUser(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (): Promise<UserProfile | null> => {
     setError(null);
 
     // If Firebase is not configured in .env, provide an instant demo login
@@ -113,7 +146,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       };
       setUser(mockProfile);
       localStorage.setItem(LOCAL_STORAGE_MOCK_USER_KEY, JSON.stringify(mockProfile));
-      return;
+      return mockProfile;
     }
 
     try {
@@ -126,29 +159,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           photoURL: result.user.photoURL,
         };
         setUser(profile);
-        await syncUserToFirestore(result.user);
+        // Non-blocking firestore sync so navigation to /app is immediate
+        syncUserToFirestore(result.user).catch((err) => {
+          console.warn('Firestore profile sync error (non-blocking):', err);
+        });
+        return profile;
       }
+      return null;
     } catch (err: unknown) {
       const authErr = err as { code?: string; message?: string };
-      // Popup blocked -> Fallback to redirect flow
-      if (authErr?.code === 'auth/popup-blocked') {
-        try {
-          await signInWithRedirect(auth, googleProvider);
-          return;
-        } catch (redirectErr) {
-          console.error('Redirect sign-in error:', redirectErr);
-          setError('Could not open Google sign-in. Please allow popups for this site.');
-        }
-      } else if (
-        authErr?.code === 'auth/popup-closed-by-user' ||
-        authErr?.code === 'auth/cancelled-popup-request'
+      console.error('[MUDICHU] Firebase signInWithPopup error code:', authErr?.code, authErr?.message);
+
+      // Popup blocked or not supported -> Fallback to redirect flow
+      if (
+        authErr?.code === 'auth/popup-blocked' ||
+        authErr?.code === 'auth/cancelled-popup-request' ||
+        authErr?.code === 'auth/operation-not-supported-in-this-environment'
       ) {
+        try {
+          console.info('[MUDICHU] Falling back to signInWithRedirect...');
+          await signInWithRedirect(auth, googleProvider);
+          return null;
+        } catch (redirectErr) {
+          console.error('[MUDICHU] Redirect sign-in error:', redirectErr);
+          setError('Could not open Google sign-in. Please allow popups or cookies for this site.');
+          return null;
+        }
+      } else if (authErr?.code === 'auth/popup-closed-by-user') {
         // Silently reset, user voluntarily closed the window
-        return;
+        return null;
+      } else if (authErr?.code === 'auth/unauthorized-domain') {
+        const domainMsg = `Domain not authorized: '${window.location.hostname}' must be added in Firebase Console > Authentication > Settings > Authorized domains.`;
+        console.error(domainMsg);
+        setError(domainMsg);
+        return null;
       } else if (authErr?.code === 'auth/network-request-failed') {
         setError('Network error. Please check your internet connection and try again.');
+        return null;
       } else {
         setError(authErr?.message || 'Failed to sign in with Google. Please try again.');
+        return null;
       }
     }
   };
