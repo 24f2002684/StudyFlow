@@ -6,6 +6,12 @@ MUDICHU balances productivity with visual delight: clean dark/light themes, an i
 
 ---
 
+## 💡 About & Motivation
+
+Built by **Suhail Akthar S M** as a personal project to complement my own lifestyle as well as my college mates'. Juggling classes, assignments, and study sessions can get chaotic, so I thought creating something clean, intuitive, and visually pleasing would be genuinely useful for them too — so yeah, here's **MUDICHU**!
+
+---
+
 ## 🌟 Key Features
 
 - **Task Management**:
@@ -77,6 +83,12 @@ MUDICHU balances productivity with visual delight: clean dark/light themes, an i
 - **Animations & Effects**: Canvas Confetti, Web Audio API
 - **Persistence**: Firebase Firestore / LocalStorage
 - **Deployment**: Vercel
+
+---
+
+## 👨‍💻 Author
+
+Created with ❤️ by **Suhail Akthar S M**.
 
 ---
 
