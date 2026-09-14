@@ -1,6 +1,13 @@
 import { initializeApp, getApps } from 'firebase/app';
 import type { FirebaseApp } from 'firebase/app';
 import { getFirestore, Firestore } from 'firebase/firestore';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  browserLocalPersistence,
+  setPersistence,
+} from 'firebase/auth';
+import type { Auth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -19,15 +26,25 @@ export const isFirebaseConfigured = Boolean(
 
 let app: FirebaseApp | null = null;
 let db: Firestore | null = null;
+let auth: Auth | null = null;
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 if (isFirebaseConfigured) {
   try {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
     db = getFirestore(app);
+    auth = getAuth(app);
+    
+    // Explicitly set persistence to browserLocalPersistence
+    setPersistence(auth, browserLocalPersistence).catch((err) => {
+      console.warn('Could not set auth persistence to browserLocalPersistence:', err);
+    });
   } catch (err) {
-    console.warn('Firebase initialization notice: Falling back to local storage.', err);
+    console.warn('Firebase initialization notice: Falling back to local mode.', err);
     db = null;
+    auth = null;
   }
 }
 
-export { db };
+export { db, auth, googleProvider };
