@@ -24,6 +24,7 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<UserProfile | null>;
   logout: () => Promise<void>;
   clearError: () => void;
+  loginAsDemo: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -125,7 +126,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.warn('Background Firestore profile sync failed:', err);
         });
       } else {
-        setUser(null);
+        const savedMock = localStorage.getItem(LOCAL_STORAGE_MOCK_USER_KEY);
+        if (savedMock) {
+          try {
+            setUser(JSON.parse(savedMock));
+          } catch {
+            setUser(null);
+          }
+        } else {
+          setUser(null);
+        }
         setLoading(false);
       }
     });
@@ -216,6 +226,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
+  const loginAsDemo = () => {
+    const mockProfile: UserProfile = {
+      uid: 'demo-student-uid',
+      name: 'Suhail Akthar',
+      email: 'suhail@college.edu',
+      photoURL: null,
+    };
+    setUser(mockProfile);
+    localStorage.setItem(LOCAL_STORAGE_MOCK_USER_KEY, JSON.stringify(mockProfile));
+  };
+
   const clearError = () => setError(null);
 
   return (
@@ -227,6 +248,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signInWithGoogle,
         logout,
         clearError,
+        loginAsDemo,
       }}
     >
       {children}

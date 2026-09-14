@@ -63,53 +63,57 @@ export const TaskList: React.FC<TaskListProps> = ({ onEditTask, onOpenAddTask })
             placeholder="Search tasks, subjects, or notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-sm rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] transition-all"
+            className="w-full pl-10 pr-4 py-2.5 sm:py-2 text-sm rounded-full bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] transition-all min-h-[44px]"
           />
         </div>
 
-        {/* Filter Chips */}
-        <div className="flex flex-wrap items-center gap-2 pt-0.5">
-          <div className="flex items-center space-x-1 text-xs text-neutral-400 dark:text-[#777777] mr-1">
-            <Filter className="w-3 h-3" />
-            <span>Filter:</span>
-          </div>
+        {/* Filter Controls: Swipeable Horizontal Pill Row on Mobile */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pt-0.5">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0 -mx-1 px-1 sm:mx-0 sm:px-0 sm:flex-wrap">
+            <div className="flex items-center space-x-1 text-xs font-semibold text-neutral-400 dark:text-[#777777] shrink-0 mr-1">
+              <Filter className="w-3.5 h-3.5 text-[#ff4d6d]" />
+              <span>Filter:</span>
+            </div>
 
-          <button
-            onClick={() => setSelectedSubject('all')}
-            className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer border ${
-              selectedSubject === 'all'
-                ? 'bg-[#ff4d6d] text-white border-[#ff4d6d]'
-                : 'bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] border-neutral-200 dark:border-[#262626] hover:text-neutral-900 dark:hover:text-[#e5e5e5]'
-            }`}
-          >
-            All Subjects
-          </button>
-
-          {allSubjects.map((sub) => (
             <button
-              key={sub}
-              onClick={() => setSelectedSubject(sub === selectedSubject ? 'all' : sub)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer border ${
-                selectedSubject === sub
-                  ? 'bg-[#ff4d6d] text-white border-[#ff4d6d]'
+              onClick={() => setSelectedSubject('all')}
+              className={`min-h-[40px] px-3.5 py-2 rounded-full text-xs font-semibold transition-all shrink-0 active:scale-95 cursor-pointer border ${
+                selectedSubject === 'all'
+                  ? 'bg-[#ff4d6d] text-white border-[#ff4d6d] shadow-xs'
                   : 'bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] border-neutral-200 dark:border-[#262626] hover:text-neutral-900 dark:hover:text-[#e5e5e5]'
               }`}
             >
-              {sub}
+              All Subjects
             </button>
-          ))}
 
-          {/* Priority filter */}
-          <select
-            value={selectedPriority}
-            onChange={(e) => setSelectedPriority(e.target.value)}
-            className="ml-auto text-xs font-medium py-1 px-2 rounded-lg bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] border border-neutral-200 dark:border-[#262626] focus:border-[#ff4d6d] focus:outline-none"
-          >
-            <option value="all">All Priorities</option>
-            <option value="high">High Priority</option>
-            <option value="medium">Medium Priority</option>
-            <option value="low">Low Priority</option>
-          </select>
+            {allSubjects.map((sub) => (
+              <button
+                key={sub}
+                onClick={() => setSelectedSubject(sub === selectedSubject ? 'all' : sub)}
+                className={`min-h-[40px] px-3.5 py-2 rounded-full text-xs font-semibold transition-all shrink-0 active:scale-95 cursor-pointer border ${
+                  selectedSubject === sub
+                    ? 'bg-[#ff4d6d] text-white border-[#ff4d6d] shadow-xs'
+                    : 'bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] border-neutral-200 dark:border-[#262626] hover:text-neutral-900 dark:hover:text-[#e5e5e5]'
+                }`}
+              >
+                {sub}
+              </button>
+            ))}
+          </div>
+
+          {/* Priority filter dropdown */}
+          <div className="flex items-center justify-end shrink-0 pt-1 sm:pt-0">
+            <select
+              value={selectedPriority}
+              onChange={(e) => setSelectedPriority(e.target.value)}
+              className="w-full sm:w-auto min-h-[40px] text-xs font-semibold py-2 px-3.5 rounded-full bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-700 dark:text-[#d4d4d4] border border-neutral-200 dark:border-[#262626] focus:border-[#ff4d6d] focus:outline-none cursor-pointer"
+            >
+              <option value="all">⚡ All Priorities</option>
+              <option value="high">🔥 High Priority</option>
+              <option value="medium">✨ Medium Priority</option>
+              <option value="low">🌱 Low Priority</option>
+            </select>
+          </div>
         </div>
       </div>
 

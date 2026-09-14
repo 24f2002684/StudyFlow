@@ -18,9 +18,18 @@ import {
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
-  const { user } = useAuth();
+  const { user, loginAsDemo } = useAuth();
   const navigate = useNavigate();
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
+  // Check ?demo=true query param for instant demo access
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('demo') === 'true') {
+      loginAsDemo();
+      navigate('/app', { replace: true });
+    }
+  }, [loginAsDemo, navigate]);
 
   // If user is already authenticated, allow instant jump or auto-redirect
   useEffect(() => {
@@ -56,29 +65,29 @@ export const LandingPage: React.FC = () => {
       <ParticleCanvas className="opacity-45 dark:opacity-60" />
 
       {/* Top Header */}
-      <header className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
+      <header className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
+        <div className="flex items-center space-x-2.5 sm:space-x-3">
           <img
             src="/logo_v1.png"
             alt="MUDICHU Logo"
-            className="w-10 h-10 rounded-xl object-contain shadow-xs"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl object-contain shadow-xs shrink-0"
           />
           <div className="flex items-center space-x-2">
-            <span className="text-xl font-extrabold tracking-tight text-neutral-900 dark:text-[#e5e5e5]">
+            <span className="text-lg sm:text-xl font-extrabold tracking-tight text-neutral-900 dark:text-[#e5e5e5]">
               MUDICHU
             </span>
-            <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-[#ff4d6d]/10 text-[#ff4d6d] border border-[#ff4d6d]/20">
+            <span className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full bg-[#ff4d6d]/10 text-[#ff4d6d] border border-[#ff4d6d]/20">
               Student Edition
             </span>
           </div>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <button
             onClick={() => setIsFeedbackOpen(true)}
-            className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#141414] border border-neutral-200 dark:border-[#262626] text-xs font-medium text-neutral-600 dark:text-[#8a8a8a] hover:text-[#ff4d6d] transition-colors cursor-pointer"
+            className="hidden md:inline-flex items-center space-x-1.5 min-h-[44px] px-3.5 py-2 rounded-full bg-white dark:bg-[#141414] border border-neutral-200 dark:border-[#262626] text-xs font-semibold text-neutral-600 dark:text-[#8a8a8a] hover:text-[#ff4d6d] transition-colors cursor-pointer"
           >
-            <MessageSquarePlus className="w-3.5 h-3.5 text-[#ff4d6d]" />
+            <MessageSquarePlus className="w-4 h-4 text-[#ff4d6d]" />
             <span>Feedback</span>
           </button>
 
@@ -87,41 +96,41 @@ export const LandingPage: React.FC = () => {
           {user ? (
             <button
               onClick={() => navigate('/app')}
-              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-[#ff4d6d] hover:bg-[#ff3357] text-white text-xs sm:text-sm font-semibold shadow-xs transition-all active:scale-95 cursor-pointer"
+              className="min-h-[44px] inline-flex items-center space-x-2 px-4 sm:px-5 py-2.5 rounded-full bg-[#ff4d6d] hover:bg-[#ff3357] text-white text-xs sm:text-sm font-bold shadow-xs transition-all active:scale-95 cursor-pointer"
             >
               <span>Go to App</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           ) : (
-            <GoogleSignInButton text="Sign In" className="py-2! px-3.5! text-xs!" />
+            <GoogleSignInButton text="Sign In" className="min-h-[44px] py-2.5! px-4! text-xs! sm:text-sm! rounded-full!" />
           )}
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 pb-16 sm:pb-24 text-center">
+      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-16 pb-12 sm:pb-24 text-center">
         {/* Punchy Pill */}
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#141414] border border-neutral-200 dark:border-[#262626] text-xs font-semibold text-neutral-700 dark:text-[#d4d4d4] shadow-xs mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-[#ff4d6d]" />
-          <span>Crafted specifically for the chaos of college life</span>
+        <div className="inline-flex items-center space-x-2 px-3 sm:px-4 py-1.5 rounded-full bg-white dark:bg-[#141414] border border-neutral-200 dark:border-[#262626] text-[11px] sm:text-xs font-semibold text-neutral-700 dark:text-[#d4d4d4] shadow-xs mb-5 sm:mb-6 max-w-[95%]">
+          <Sparkles className="w-3.5 h-3.5 text-[#ff4d6d] shrink-0" />
+          <span className="truncate">Crafted specifically for the chaos of college life</span>
         </div>
 
         {/* Headline */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.08] max-w-4xl mx-auto">
+        <h1 className="text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.14] sm:leading-[1.08] max-w-4xl mx-auto px-1">
           Turn your <span className="text-[#ff4d6d] underline decoration-[#ff4d6d]/40 decoration-wavy">11:59 PM panic</span> into calm, unstoppable momentum.
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-6 text-base sm:text-xl text-neutral-600 dark:text-[#999999] max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 sm:mt-6 text-sm sm:text-lg md:text-xl text-neutral-600 dark:text-[#999999] max-w-2xl mx-auto leading-relaxed px-2">
           No corporate agile fluff or 14-field task forms. Just raw focus, drag-and-drop urgency grouping, an integrated Pomodoro escape pod, and automatic Google sync.
         </p>
 
         {/* CTA Actions */}
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-7 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-2">
           <GoogleSignInButton
             size="large"
             text="Get Started with Google"
-            className="w-full sm:w-auto shadow-lg shadow-[#ff4d6d]/15"
+            className="w-full sm:w-auto shadow-lg shadow-[#ff4d6d]/15 rounded-full! min-h-[48px]"
           />
         </div>
 

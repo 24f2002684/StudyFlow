@@ -107,7 +107,8 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-neutral-400 hover:text-neutral-600 dark:text-[#8a8a8a] dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] transition-colors cursor-pointer"
+            className="w-11 h-11 rounded-full flex items-center justify-center text-neutral-400 hover:text-neutral-600 dark:text-[#8a8a8a] dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] active:scale-95 active:bg-[#ff4d6d]/10 transition-all cursor-pointer -mr-2"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
@@ -126,7 +127,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
             </p>
             <button
               onClick={onClose}
-              className="mt-2 px-6 py-2.5 rounded-2xl bg-[#ff4d6d] hover:bg-[#ff3357] text-white text-sm font-semibold shadow-md transition-all active:scale-95 cursor-pointer"
+              className="mt-2 min-h-[44px] px-6 py-2.5 rounded-full bg-[#ff4d6d] hover:bg-[#ff3357] text-white text-sm font-bold shadow-md transition-all active:scale-95 cursor-pointer"
             >
               Back to MUDICHU
             </button>
@@ -134,7 +135,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
         ) : (
           <form onSubmit={handleSubmit} className="mt-5 space-y-4">
             {errorMessage && (
-              <div className="flex items-center space-x-2 p-3 rounded-xl bg-[#ff4d6d]/10 text-[#ff4d6d] border border-[#ff4d6d]/20 text-xs font-medium">
+              <div className="flex items-center space-x-2 p-3 rounded-2xl bg-[#ff4d6d]/10 text-[#ff4d6d] border border-[#ff4d6d]/20 text-xs font-medium">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{errorMessage}</span>
               </div>
@@ -150,7 +151,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 placeholder="e.g. Alex Chen"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all"
+                className="w-full px-4 py-2.5 rounded-2xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all min-h-[44px]"
               />
             </div>
 
@@ -164,7 +165,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 placeholder="e.g. alex@college.edu"
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all"
+                className="w-full px-4 py-2.5 rounded-2xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all min-h-[44px]"
               />
             </div>
 
@@ -179,7 +180,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 placeholder="What's working well? What features would help your college workflow? Any bugs found?"
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all resize-none leading-relaxed"
+                className="w-full px-4 py-2.5 rounded-2xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all resize-none leading-relaxed"
               />
             </div>
 
@@ -188,14 +189,14 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl text-sm font-medium text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] transition-colors cursor-pointer"
+                className="min-h-[44px] px-5 py-2.5 rounded-full text-sm font-semibold text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-[#ff4d6d] hover:bg-[#ff3357] disabled:opacity-60 text-white font-semibold text-sm shadow-md transition-all active:scale-95 cursor-pointer"
+                className="min-h-[44px] inline-flex items-center space-x-2 px-6 py-2.5 rounded-full bg-[#ff4d6d] hover:bg-[#ff3357] disabled:opacity-60 text-white font-bold text-sm shadow-md transition-all active:scale-95 cursor-pointer"
               >
                 {status === 'submitting' ? (
                   <>

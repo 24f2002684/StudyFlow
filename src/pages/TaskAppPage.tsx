@@ -7,7 +7,7 @@ import { TaskModal } from '../components/TaskModal';
 import { FeedbackModal } from '../components/FeedbackModal';
 import { TaskAppBackground } from '../components/TaskAppBackground';
 import type { Task } from '../types';
-import { Lightbulb, Zap } from 'lucide-react';
+import { Lightbulb, Zap, Plus } from 'lucide-react';
 
 export const TaskAppPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -94,6 +94,16 @@ export const TaskAppPage: React.FC = () => {
         isOpen={isFeedbackOpen}
         onClose={() => setIsFeedbackOpen(false)}
       />
+
+      {/* Mobile Floating Action Button (FAB) for adding tasks */}
+      <button
+        onClick={handleOpenAdd}
+        className="sm:hidden fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-[#ff4d6d] hover:bg-[#ff3357] text-white shadow-xl shadow-[#ff4d6d]/40 flex items-center justify-center active:scale-90 transition-all cursor-pointer border-2 border-white/20"
+        aria-label="Add new task"
+        title="Add new task"
+      >
+        <Plus className="w-7 h-7 stroke-[2.5]" />
+      </button>
     </div>
   );
 };

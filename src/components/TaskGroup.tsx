@@ -58,7 +58,10 @@ export const TaskGroup: React.FC<TaskGroupProps> = ({
       {/* Group Header */}
       <div
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center justify-between py-2 px-1 cursor-pointer select-none group"
+        className="flex items-center justify-between min-h-[44px] py-2 px-1 cursor-pointer select-none group active:opacity-80 transition-opacity"
+        role="button"
+        tabIndex={0}
+        aria-expanded={isExpanded}
       >
         <div className="flex items-center space-x-2.5">
           <span className="text-neutral-400 dark:text-[#666666] group-hover:text-neutral-600 dark:group-hover:text-[#e5e5e5] transition-colors">

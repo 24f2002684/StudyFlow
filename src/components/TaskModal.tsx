@@ -127,9 +127,11 @@ export const TaskModal: React.FC<TaskModalProps> = ({
               {editingTask ? 'Edit Study Task' : 'Add New Task'}
             </h2>
           </div>
+          {/* Close button with 44x44px target */}
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-neutral-400 hover:text-neutral-600 dark:text-[#8a8a8a] dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] transition-colors cursor-pointer"
+            className="w-11 h-11 rounded-full flex items-center justify-center text-neutral-400 hover:text-neutral-600 dark:text-[#8a8a8a] dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] active:scale-95 active:bg-[#ff4d6d]/10 transition-all cursor-pointer"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
@@ -138,7 +140,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         {/* Form */}
         <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           {error && (
-            <div className="flex items-center space-x-2 p-3 rounded-xl bg-[#ff4d6d]/10 text-[#ff4d6d] border border-[#ff4d6d]/20 text-xs font-medium">
+            <div className="flex items-center space-x-2 p-3 rounded-2xl bg-[#ff4d6d]/10 text-[#ff4d6d] border border-[#ff4d6d]/20 text-xs font-medium">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -155,7 +157,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
               placeholder="e.g. Write Introduction for Psychology Paper"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm font-medium transition-all"
+              className="w-full px-4 py-2.5 rounded-2xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm font-medium transition-all min-h-[44px]"
             />
           </div>
 
@@ -165,18 +167,18 @@ export const TaskModal: React.FC<TaskModalProps> = ({
               Course / Subject Tag
             </label>
             <div className="relative">
-              <Tag className="w-4 h-4 text-neutral-400 dark:text-[#666666] absolute left-3 top-1/2 -translate-y-1/2" />
+              <Tag className="w-4 h-4 text-neutral-400 dark:text-[#666666] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="e.g. Math, CS, History"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] placeholder-neutral-400 dark:placeholder-[#555555] focus:outline-none focus:border-[#ff4d6d] text-sm transition-all min-h-[44px]"
               />
             </div>
 
             {/* Presets */}
-            <div className="flex flex-wrap gap-1.5 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2.5">
               {SUBJECT_PRESETS.map((preset) => (
                 <button
                   type="button"
@@ -185,17 +187,17 @@ export const TaskModal: React.FC<TaskModalProps> = ({
                     setSubject(preset.name);
                     setSubjectColor(preset.color);
                   }}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer border ${
+                  className={`min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer border flex items-center active:scale-95 ${
                     subject === preset.name
-                      ? 'bg-[#ff4d6d] text-white border-[#ff4d6d]'
+                      ? 'bg-[#ff4d6d] text-white border-[#ff4d6d] shadow-xs'
                       : 'bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] border-neutral-200 dark:border-[#262626] hover:text-neutral-900 dark:hover:text-[#e5e5e5]'
                   }`}
                 >
                   <span
-                    className="inline-block w-1.5 h-1.5 rounded-full mr-1.5"
+                    className="inline-block w-2 h-2 rounded-full mr-2 shrink-0"
                     style={{ backgroundColor: preset.color }}
                   />
-                  {preset.name}
+                  <span>{preset.name}</span>
                 </button>
               ))}
             </div>
@@ -207,37 +209,37 @@ export const TaskModal: React.FC<TaskModalProps> = ({
               <label className="text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-[#8a8a8a]">
                 Due Date
               </label>
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center space-x-1.5">
                 <button
                   type="button"
                   onClick={() => setDatePreset(0)}
-                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626]"
+                  className="min-h-[32px] text-[11px] font-semibold px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626] active:scale-95"
                 >
                   Today
                 </button>
                 <button
                   type="button"
                   onClick={() => setDatePreset(1)}
-                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626]"
+                  className="min-h-[32px] text-[11px] font-semibold px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626] active:scale-95"
                 >
                   Tomorrow
                 </button>
                 <button
                   type="button"
                   onClick={() => setDatePreset(7)}
-                  className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626]"
+                  className="min-h-[32px] text-[11px] font-semibold px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-[#1a1a1a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] border border-neutral-200 dark:border-[#262626] active:scale-95"
                 >
                   Next Week
                 </button>
               </div>
             </div>
             <div className="relative">
-              <Calendar className="w-4 h-4 text-neutral-400 dark:text-[#666666] absolute left-3 top-1/2 -translate-y-1/2" />
+              <Calendar className="w-4 h-4 text-neutral-400 dark:text-[#666666] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] text-sm focus:outline-none focus:border-[#ff4d6d]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] text-neutral-900 dark:text-[#e5e5e5] text-sm focus:outline-none focus:border-[#ff4d6d] min-h-[44px]"
               />
             </div>
           </div>
@@ -247,39 +249,39 @@ export const TaskModal: React.FC<TaskModalProps> = ({
             <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-[#8a8a8a] mb-1.5">
               Priority
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2.5">
               <button
                 type="button"
                 onClick={() => setPriority('low')}
-                className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                className={`min-h-[44px] py-2.5 px-3 rounded-2xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center active:scale-95 ${
                   priority === 'low'
                     ? 'bg-[#2dd4bf]/15 border-[#2dd4bf] text-[#2dd4bf]'
                     : 'bg-neutral-50 dark:bg-[#0f0f0f] border-neutral-200 dark:border-[#262626] text-neutral-600 dark:text-[#8a8a8a] hover:border-neutral-300'
                 }`}
               >
-                Low
+                🌱 Low
               </button>
               <button
                 type="button"
                 onClick={() => setPriority('medium')}
-                className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                className={`min-h-[44px] py-2.5 px-3 rounded-2xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center active:scale-95 ${
                   priority === 'medium'
                     ? 'bg-[#fbbf24]/15 border-[#fbbf24] text-[#fbbf24]'
                     : 'bg-neutral-50 dark:bg-[#0f0f0f] border-neutral-200 dark:border-[#262626] text-neutral-600 dark:text-[#8a8a8a] hover:border-neutral-300'
                 }`}
               >
-                Medium
+                ✨ Medium
               </button>
               <button
                 type="button"
                 onClick={() => setPriority('high')}
-                className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                className={`min-h-[44px] py-2.5 px-3 rounded-2xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center active:scale-95 ${
                   priority === 'high'
                     ? 'bg-[#ff4d6d]/15 border-[#ff4d6d] text-[#ff4d6d]'
                     : 'bg-neutral-50 dark:bg-[#0f0f0f] border-neutral-200 dark:border-[#262626] text-neutral-600 dark:text-[#8a8a8a] hover:border-neutral-300'
                 }`}
               >
-                High
+                🔥 High
               </button>
             </div>
           </div>
@@ -289,14 +291,14 @@ export const TaskModal: React.FC<TaskModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-sm font-medium text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] transition-colors cursor-pointer"
+              className="min-h-[44px] px-5 py-2.5 rounded-full text-sm font-semibold text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] hover:bg-neutral-100 dark:hover:bg-[#1f1f1f] transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2 rounded-xl bg-[#ff4d6d] hover:bg-[#ff3357] text-white font-semibold text-sm shadow-xs active:scale-95 transition-all cursor-pointer"
+              className="min-h-[44px] px-6 py-2.5 rounded-full bg-[#ff4d6d] hover:bg-[#ff3357] text-white font-bold text-sm shadow-md active:scale-95 transition-all cursor-pointer"
             >
               {isSubmitting ? 'Saving...' : editingTask ? 'Update Task' : 'Create Task'}
             </button>

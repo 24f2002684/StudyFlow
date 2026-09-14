@@ -42,16 +42,17 @@ export const ParticleCanvas: React.FC<{ className?: string }> = ({ className = '
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Generate particles
-    const particleCount = Math.min(28, Math.max(16, Math.floor(width / 50)));
+    // Generate particles scaled down on mobile for clean visual space and smooth performance
+    const isMobile = width < 640;
+    const particleCount = isMobile ? 8 : Math.min(26, Math.max(14, Math.floor(width / 50)));
     const particles: Particle[] = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: -0.2 - Math.random() * 0.35, // Drifting upwards like focus thoughts
+      vx: (Math.random() - 0.5) * (isMobile ? 0.25 : 0.4),
+      vy: -0.15 - Math.random() * (isMobile ? 0.25 : 0.35), // Drifting upwards
       glyph: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
-      size: 16 + Math.random() * 14,
-      opacity: 0.14 + Math.random() * 0.18,
+      size: isMobile ? 13 + Math.random() * 6 : 16 + Math.random() * 14,
+      opacity: isMobile ? 0.08 + Math.random() * 0.08 : 0.14 + Math.random() * 0.18,
       rotation: Math.random() * Math.PI * 2,
       vRot: (Math.random() - 0.5) * 0.008,
     }));

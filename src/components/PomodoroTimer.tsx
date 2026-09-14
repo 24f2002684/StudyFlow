@@ -111,37 +111,40 @@ export const PomodoroTimer: React.FC = () => {
 
   return (
     <div className="bg-white dark:bg-[#141414] rounded-2xl p-6 border border-neutral-200 dark:border-[#262626] shadow-xs transition-colors duration-250">
-      {/* Mode Switcher Tabs */}
-      <div className="flex items-center justify-center p-1 rounded-xl bg-neutral-100 dark:bg-[#0f0f0f] mb-6 border border-neutral-200/60 dark:border-[#262626]">
+      {/* Mode Switcher Tabs with minimum 44px touch height */}
+      <div className="flex items-center justify-center p-1 rounded-2xl bg-neutral-100 dark:bg-[#0f0f0f] mb-6 border border-neutral-200/60 dark:border-[#262626] gap-1">
         <button
           onClick={() => switchMode('focus')}
-          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
+          className={`flex-1 min-h-[44px] py-1.5 px-1.5 sm:px-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer flex flex-col sm:flex-row items-center justify-center text-center leading-tight ${
             mode === 'focus'
               ? 'bg-white dark:bg-[#1f1f1f] text-[#ff4d6d] shadow-xs'
               : 'text-neutral-500 dark:text-[#8a8a8a] hover:text-neutral-800 dark:hover:text-[#e5e5e5]'
           }`}
         >
-          🍅 Focus (25m)
+          <span>🍅 Focus</span>
+          <span className="text-[10px] sm:text-[11px] sm:ml-1 font-normal opacity-75">(25m)</span>
         </button>
         <button
           onClick={() => switchMode('shortBreak')}
-          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
+          className={`flex-1 min-h-[44px] py-1.5 px-1.5 sm:px-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer flex flex-col sm:flex-row items-center justify-center text-center leading-tight ${
             mode === 'shortBreak'
               ? 'bg-white dark:bg-[#1f1f1f] text-[#2dd4bf] shadow-xs'
               : 'text-neutral-500 dark:text-[#8a8a8a] hover:text-neutral-800 dark:hover:text-[#e5e5e5]'
           }`}
         >
-          ☕ Short (5m)
+          <span>☕ Short</span>
+          <span className="text-[10px] sm:text-[11px] sm:ml-1 font-normal opacity-75">(5m)</span>
         </button>
         <button
           onClick={() => switchMode('longBreak')}
-          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
+          className={`flex-1 min-h-[44px] py-1.5 px-1.5 sm:px-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer flex flex-col sm:flex-row items-center justify-center text-center leading-tight ${
             mode === 'longBreak'
               ? 'bg-white dark:bg-[#1f1f1f] text-[#fbbf24] shadow-xs'
               : 'text-neutral-500 dark:text-[#8a8a8a] hover:text-neutral-800 dark:hover:text-[#e5e5e5]'
           }`}
         >
-          🧘 Long (15m)
+          <span>🧘 Long</span>
+          <span className="text-[10px] sm:text-[11px] sm:ml-1 font-normal opacity-75">(15m)</span>
         </button>
       </div>
 
@@ -189,32 +192,34 @@ export const PomodoroTimer: React.FC = () => {
         </div>
       </div>
 
-      {/* Controls */}
-      <div className="flex items-center justify-center space-x-3 mt-5">
+      {/* Controls with 48x48px thumb-friendly buttons and 12-16px gap */}
+      <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6">
         <button
           onClick={resetTimer}
-          className="p-3 rounded-xl bg-neutral-100 dark:bg-[#1a1a1a] border border-neutral-200 dark:border-[#2a2a2a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] transition-colors active:scale-95 cursor-pointer"
+          className="w-12 h-12 min-w-[44px] min-h-[44px] rounded-full bg-neutral-100 dark:bg-[#1a1a1a] border border-neutral-200 dark:border-[#2a2a2a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] flex items-center justify-center transition-all active:scale-90 active:bg-[#ff4d6d]/15 cursor-pointer"
           title="Reset timer"
+          aria-label="Reset timer"
         >
-          <RotateCcw className="w-4 h-4" />
+          <RotateCcw className="w-5 h-5" />
         </button>
 
         <button
           onClick={toggleRunning}
-          className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-bold text-white shadow-xs transition-all active:scale-95 cursor-pointer ${
+          className={`min-h-[48px] px-7 py-3 rounded-full font-bold text-sm sm:text-base flex items-center space-x-2.5 shadow-md transition-all active:scale-95 cursor-pointer ${
             isRunning
-              ? 'bg-[#fbbf24] hover:bg-[#f59e0b] text-neutral-900'
-              : 'bg-[#ff4d6d] hover:bg-[#ff3357] text-white'
+              ? 'bg-[#fbbf24] hover:bg-[#f59e0b] text-neutral-950 shadow-[#fbbf24]/20'
+              : 'bg-[#ff4d6d] hover:bg-[#ff3357] text-white shadow-[#ff4d6d]/25'
           }`}
+          aria-label={isRunning ? 'Pause timer' : 'Start timer'}
         >
           {isRunning ? (
             <>
-              <Pause className="w-4 h-4 fill-current" />
+              <Pause className="w-5 h-5 fill-current" />
               <span>Pause</span>
             </>
           ) : (
             <>
-              <Play className="w-4 h-4 fill-current" />
+              <Play className="w-5 h-5 fill-current" />
               <span>Start</span>
             </>
           )}
@@ -222,18 +227,20 @@ export const PomodoroTimer: React.FC = () => {
 
         <button
           onClick={skipTimer}
-          className="p-3 rounded-xl bg-neutral-100 dark:bg-[#1a1a1a] border border-neutral-200 dark:border-[#2a2a2a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] transition-colors active:scale-95 cursor-pointer"
+          className="w-12 h-12 min-w-[44px] min-h-[44px] rounded-full bg-neutral-100 dark:bg-[#1a1a1a] border border-neutral-200 dark:border-[#2a2a2a] text-neutral-600 dark:text-[#8a8a8a] hover:text-neutral-900 dark:hover:text-[#e5e5e5] flex items-center justify-center transition-all active:scale-90 active:bg-[#ff4d6d]/15 cursor-pointer"
           title="Skip session"
+          aria-label="Skip session"
         >
-          <SkipForward className="w-4 h-4" />
+          <SkipForward className="w-5 h-5" />
         </button>
 
         <button
           onClick={() => sounds.playSessionComplete()}
-          className="p-3 rounded-xl bg-neutral-100 dark:bg-[#1a1a1a] border border-neutral-200 dark:border-[#2a2a2a] text-neutral-500 dark:text-[#8a8a8a] hover:text-[#ff4d6d] transition-colors active:scale-95 cursor-pointer"
+          className="w-12 h-12 min-w-[44px] min-h-[44px] rounded-full bg-neutral-100 dark:bg-[#1a1a1a] border border-neutral-200 dark:border-[#2a2a2a] text-neutral-500 dark:text-[#8a8a8a] hover:text-[#ff4d6d] flex items-center justify-center transition-all active:scale-90 active:bg-[#ff4d6d]/15 cursor-pointer"
           title="Test sound alert"
+          aria-label="Test sound alert"
         >
-          <Volume2 className="w-4 h-4" />
+          <Volume2 className="w-5 h-5" />
         </button>
       </div>
 
@@ -246,7 +253,7 @@ export const PomodoroTimer: React.FC = () => {
         <select
           value={attachedTaskId}
           onChange={(e) => setAttachedTaskId(e.target.value)}
-          className="w-full text-xs rounded-xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] p-2.5 text-neutral-800 dark:text-[#e5e5e5] focus:outline-none focus:border-[#ff4d6d] transition-colors"
+          className="w-full min-h-[44px] text-xs rounded-2xl bg-neutral-50 dark:bg-[#0f0f0f] border border-neutral-200 dark:border-[#262626] px-3.5 py-2.5 text-neutral-800 dark:text-[#e5e5e5] focus:outline-none focus:border-[#ff4d6d] transition-colors cursor-pointer"
         >
           <option value="">No task linked (General Study)</option>
           {pendingTasks.map((t) => (
@@ -257,9 +264,9 @@ export const PomodoroTimer: React.FC = () => {
           ))}
         </select>
         {attachedTaskId && (
-          <p className="text-[11px] text-[#2dd4bf] mt-1.5 flex items-center">
-            <Sparkles className="w-3 h-3 mr-1" />
-            Completing this session logs +1 🍅 to this task!
+          <p className="text-[11px] text-[#2dd4bf] mt-2 flex items-center">
+            <Sparkles className="w-3 h-3 mr-1 shrink-0" />
+            <span>Completing this session logs +1 🍅 to this task!</span>
           </p>
         )}
       </div>
